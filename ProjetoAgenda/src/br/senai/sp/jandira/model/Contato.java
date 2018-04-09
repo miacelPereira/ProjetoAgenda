@@ -8,7 +8,16 @@ public class Contato {
 	private String celular;
 	private String email;
 	private String dtNascimento;
-	private String endereço;
+	private String endereco;
+	private String sexo;
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
 	public int getId() {
 		return id;
@@ -58,13 +67,11 @@ public class Contato {
 		this.dtNascimento = dtNascimento;
 	}
 
-	public String getEndereço() {
-		return endereço;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEndereço(String endereço) {
-		this.endereço = endereço;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
-	
-	
 }
