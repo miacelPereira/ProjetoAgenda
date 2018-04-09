@@ -15,9 +15,11 @@ public class Agenda {
 		ContatoDAO consultaNomes = new ContatoDAO();
 		ResultSet rs = consultaNomes.getContatos();
 		
+		
 		try{
 			while(rs.next()){
 				System.out.println("Nomes: " + rs.getString("nome"));
+				Conexao.fecharConexao();
 			}
 		}catch(Exception erro){
 			JOptionPane.showMessageDialog(null,"Erro na consulta", "Erro!", JOptionPane.ERROR_MESSAGE);
