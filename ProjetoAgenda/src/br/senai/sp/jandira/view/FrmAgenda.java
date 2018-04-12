@@ -86,7 +86,7 @@ public class FrmAgenda extends JFrame {
 		JButton btnNovo = new JButton("");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmContato contato = new FrmContato();
+				FrmContato contato = new FrmContato("Novo");
 				contato.setVisible(true);
 				
 			}
@@ -101,7 +101,7 @@ public class FrmAgenda extends JFrame {
 		btnEditar.setToolTipText("Editar um contato que j\u00E1 existe.");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmContato contato = new FrmContato();
+				FrmContato contato = new FrmContato("Editar");
 				contato.setVisible(true);
 			}
 		});
@@ -111,7 +111,7 @@ public class FrmAgenda extends JFrame {
 		JButton btnExcluir = new JButton("");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmContato contato = new FrmContato();
+				FrmContato contato = new FrmContato("Excluir");
 				contato.setVisible(true);
 			}
 		});
