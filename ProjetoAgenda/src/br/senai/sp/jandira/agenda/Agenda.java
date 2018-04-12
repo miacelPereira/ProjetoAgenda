@@ -8,23 +8,13 @@ import javax.swing.JOptionPane;
 
 import br.senai.sp.jandira.dao.ContatoDAO;
 import br.senai.sp.jandira.jdbc.Conexao;
+import br.senai.sp.jandira.view.FrmAgenda;
 
 public class Agenda {
 
 	public static void main(String[] args) {
-		ContatoDAO consultaNomes = new ContatoDAO();
-		ResultSet rs = consultaNomes.getContatos();
-		
-		
-		try{
-			while(rs.next()){
-				System.out.println("Nomes: " + rs.getString("nome"));
-				Conexao.fecharConexao();
-			}
-		}catch(Exception erro){
-			JOptionPane.showMessageDialog(null,"Erro na consulta", "Erro!", JOptionPane.ERROR_MESSAGE);
-		}
-		
+		FrmAgenda agenda = new FrmAgenda();
+			agenda.setVisible(true);
 		
 	}
 }

@@ -16,12 +16,12 @@ public class Conexao {
 		
 		try{
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			String dbURL = "jdbc:ucanaccess:////10.107.134.23/banco/agenda.accdb";
-			//String dbURL = "jdbc:ucanaccess://C:/Users/17259235/Desktop/Banco de Dados1.accdb";
+			String dbURL = "jdbc:ucanaccess:////10.107.134.3/banco2/agenda.accdb";
+			//String dbURL = "jdbc:ucanaccess://C:/Users/17259235/Desktop/bancodedados.accdb";
 			
 			con = DriverManager.getConnection(dbURL);
 		}catch(Exception erro){
-				JOptionPane.showMessageDialog(null,"Não foi possível se conectar ao Bancos de dados.","ERRO", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Não foi possível se conectar ao Bancos de dados.","ERRO", JOptionPane.ERROR_MESSAGE);
 		}
 		return con;
 		
@@ -35,7 +35,5 @@ public class Conexao {
 				JOptionPane.showMessageDialog(null,"O banco já está fechado!","ERRO", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
 	}
-
 }
