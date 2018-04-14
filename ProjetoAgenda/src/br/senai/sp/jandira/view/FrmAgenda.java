@@ -125,7 +125,7 @@ public class FrmAgenda extends JFrame {
 		btnSair.setToolTipText("Sair da aplica\u00E7\u00E3o.");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				System.exit(0);
 			}
 		});
 		btnSair.setBounds(317, 11, 89, 52);
