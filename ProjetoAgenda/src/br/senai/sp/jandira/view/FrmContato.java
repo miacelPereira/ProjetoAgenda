@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
@@ -49,6 +52,7 @@ public class FrmContato extends JFrame {
 		painelTitulo.add(lblContatos);
 		
 		JLabel lblOperao = new JLabel("Opera\u00E7\u00E3o");
+		lblOperao.setText(operacao);
 		lblOperao.setBounds(338, 28, 66, 14);
 		painelTitulo.add(lblOperao);
 		
@@ -123,7 +127,7 @@ public class FrmContato extends JFrame {
 		painelDados.add(txtCelular);
 		
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
-		lblEndereo.setBounds(10, 150, 54, 14);
+		lblEndereo.setBounds(10, 150, 90, 14);
 		painelDados.add(lblEndereo);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -149,6 +153,12 @@ public class FrmContato extends JFrame {
 		btnFechar.setIcon(new ImageIcon(FrmContato.class.getResource("/br/senai/sp/jandira/imagens/exitApp32.png")));
 		btnFechar.setBounds(359, 11, 45, 45);
 		painelBotao.add(btnFechar);
+		btnFechar.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FrmContato.this.dispose();
+			}
+		});
 	}
 }
 
