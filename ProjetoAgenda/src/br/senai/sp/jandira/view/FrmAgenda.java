@@ -14,8 +14,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import br.senai.sp.jandira.dao.ContatoDAO;
+import br.senai.sp.jandira.model.Contato;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
@@ -28,7 +33,8 @@ public class FrmAgenda extends JFrame {
 
 	private JPanel painelPrincipal;
 	private JTable tabelaContatos;
-
+	private JPanel painelTabela;
+	
 	public FrmAgenda() {
 		setTitle("Agenda de Contatos");
 		setBounds(100, 100, 450, 441);
@@ -50,32 +56,14 @@ public class FrmAgenda extends JFrame {
 		lblTitulo.setBounds(10, 11, 414, 49);
 		painelTitulo.add(lblTitulo);
 		
-		JPanel painelTabela = new JPanel();
+		painelTabela = new JPanel();
 		painelTabela.setBorder(new TitledBorder(null, "Meus contatos:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		painelTabela.setBounds(10, 78, 414, 228);
 		painelPrincipal.add(painelTabela);
 		painelTabela.setLayout(null);
 		
-		JScrollPane scrollTabela = new JScrollPane();
-		scrollTabela.setBounds(10, 23, 394, 201);
-		painelTabela.add(scrollTabela);
-		
-		tabelaContatos = new JTable();
-		tabelaContatos.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"ID", "Nome", "E-mail"
-			}
-		));
-		tabelaContatos.getColumnModel().getColumn(0).setPreferredWidth(30);
-		tabelaContatos.getColumnModel().getColumn(1).setPreferredWidth(248);
-		tabelaContatos.getColumnModel().getColumn(2).setPreferredWidth(300);
-		scrollTabela.setViewportView(tabelaContatos);
+		//*** Construção da tabela 
+		criarTabela();
 		
 		JPanel painelBotao = new JPanel();
 		painelBotao.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -101,8 +89,12 @@ public class FrmAgenda extends JFrame {
 		btnEditar.setToolTipText("Editar um contato que j\u00E1 existe.");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Pegando o ID da linha que o usuario clicou
+				int linha = tabelaContatos.getSelectedRow();
+				int coluna = 0;
+				System.out.println("ID: "+tabelaContatos.getValueAt(linha, coluna));
 				FrmContato contato = new FrmContato("Editar");
-				contato.setVisible(true);
+				contato.setVisible(true); 
 			}
 		});
 		btnEditar.setBounds(111, 11, 89, 52);
@@ -130,5 +122,58 @@ public class FrmAgenda extends JFrame {
 		});
 		btnSair.setBounds(317, 11, 89, 52);
 		painelBotao.add(btnSair);
+	}
+	
+	public void criarTabela(){
+		JScrollPane scrollTabela = new JScrollPane();
+		scrollTabela.setBounds(10, 23, 394, 201);
+		painelTabela.add(scrollTabela);
+		
+		// **********Tabela***************
+		tabelaContatos = new JTable();
+		ArrayList<Contato> contatos = new ArrayList<>();
+		ContatoDAO dao = new ContatoDAO();
+		contatos = dao.getListaContatos();
+		
+		//****** Título da Tabela ******
+		DefaultTableModel modeloTabela = new DefaultTableModel(){
+		//Bloqueando edição da tabela
+			public boolean isCellEditable(int row, int col){
+				return false;
+			}
+		};
+		String [] nomesColunas = {"ID", "Nome", "E-mail"};
+		modeloTabela.setColumnIdentifiers(nomesColunas);
+		
+		//****** Dados da Tabela ******
+		Object[] linha = new Object[3];
+		
+		//****Recebendo os contatos do arraylist, um contato por vez (uma linha por vez) e criando uma nova linha para guardar os dados
+		for(Contato contato : contatos){
+			linha[0] = contato.getId();
+			linha[1] = contato.getNome();
+			linha[2] = contato.getEmail();
+			modeloTabela.addRow(linha);
+		}
+		tabelaContatos.setModel(modeloTabela);
+		
+		//****Formatação das colunas ****
+		//****Travando movimentação da coluna*****
+		tabelaContatos.getTableHeader().setReorderingAllowed(false);
+		
+		//*****Largura das colunas******
+		tabelaContatos.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tabelaContatos.getColumnModel().getColumn(0).setResizable(false);
+		
+		
+		tabelaContatos.getColumnModel().getColumn(1).setPreferredWidth(190);
+		tabelaContatos.getColumnModel().getColumn(1).setResizable(false);
+		
+		tabelaContatos.getColumnModel().getColumn(2).setPreferredWidth(174);
+		tabelaContatos.getColumnModel().getColumn(2).setResizable(false);
+		
+		scrollTabela.setViewportView(tabelaContatos);
+		
+		
 	}
 }

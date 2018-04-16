@@ -16,7 +16,7 @@ public class Conexao {
 		
 		try{
 			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			String dbURL = "jdbc:ucanaccess:////10.107.134.3/banco2/agenda.accdb";
+			String dbURL = "jdbc:ucanaccess:////10.107.134.23/banco/agenda.accdb";
 			//String dbURL = "jdbc:ucanaccess://C:/Users/17259235/Desktop/bancodedados.accdb";
 			
 			con = DriverManager.getConnection(dbURL);
