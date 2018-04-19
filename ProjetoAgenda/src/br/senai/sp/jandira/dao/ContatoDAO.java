@@ -11,8 +11,13 @@ import br.senai.sp.jandira.model.Contato;
 
 public class ContatoDAO {
 	
+	private Contato contato;
 	private ResultSet resultado;
 	private PreparedStatement stm;
+	
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
 	
 	//Método
 	public ResultSet getContatos(){
@@ -100,4 +105,21 @@ public class ContatoDAO {
 				
 		return contato;
 	}
+	
+	//Gravando no banco de dados
+	public void gravar (){
+		
+	}
+	
+	//Atualizar contato
+	public void atualizar (){
+		
+	}
+	//Excluir um contato
+	public void excluir(){
+		
+	}
+
+
 }
+
