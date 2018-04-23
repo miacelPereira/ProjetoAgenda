@@ -22,7 +22,10 @@ import br.senai.sp.jandira.model.Contato;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
@@ -30,6 +33,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.SwingConstants;
 
 public class FrmAgenda extends JFrame {
 
@@ -57,6 +61,17 @@ public class FrmAgenda extends JFrame {
 		lblTitulo.setFont(new Font("Arial Black", Font.PLAIN, 26));
 		lblTitulo.setBounds(10, 11, 414, 49);
 		painelTitulo.add(lblTitulo);
+		
+		JLabel lblData = new JLabel("Data atual");
+		lblData.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblData.setBounds(357, 53, 67, 14);
+		
+		//Colocando data em uma label
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date dataAtual= new Date();
+		lblData.setText(df.format(dataAtual));
+		painelTitulo.add(lblData);
+		
 
 		painelTabela = new JPanel();
 		painelTabela.setBorder(
@@ -101,6 +116,19 @@ public class FrmAgenda extends JFrame {
 		JButton btnExcluir = new JButton("");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat dfBanco = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.000000");
+				
+				String minhaData= ("23-04-2018");
+				Date dataSistema = null;
+				try {
+					dataSistema = df.parse(minhaData);
+				} catch (ParseException e1) {
+					
+					e1.printStackTrace();
+				}
+				System.out.println(dataSistema);
+				
 				carregarContatos("Excluir");
 			}
 		});

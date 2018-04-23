@@ -11,15 +11,22 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
+
+import br.senai.sp.jandira.dao.ContatoDAO;
+import br.senai.sp.jandira.model.Contato;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class FrmContato extends JFrame {
 
@@ -27,11 +34,12 @@ public class FrmContato extends JFrame {
 	private JTextField txtId;
 	private JTextField txtNome;
 	private JTextField txtEmail;
-	private JTextField txtDtNasc;
+	//private JTextField txtDtNasc;
 	private JTextField txtTelefone;
 	private JTextField txtCelular;
 	private JComboBox cbSexo;
 	private JTextArea textArea;
+	private JFormattedTextField txtDtNasc;
 	
 	public void setTextArea(String area) {
 		this.textArea.setText(area);
@@ -144,11 +152,6 @@ public class FrmContato extends JFrame {
 		lblDtNasc.setBounds(10, 101, 54, 14);
 		painelDados.add(lblDtNasc);
 
-		txtDtNasc = new JTextField();
-		txtDtNasc.setColumns(10);
-		txtDtNasc.setBounds(10, 119, 86, 20);
-		painelDados.add(txtDtNasc);
-
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(103, 101, 54, 14);
 		painelDados.add(lblTelefone);
@@ -178,6 +181,18 @@ public class FrmContato extends JFrame {
 		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
+		
+		//colocando mascra no txt
+		MaskFormatter dataMask = null;
+		try {
+			dataMask= new MaskFormatter("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		txtDtNasc = new JFormattedTextField();
+		txtDtNasc.setBounds(33, 119, 63, 20);
+		painelDados.add(txtDtNasc);
 
 		JPanel painelBotao = new JPanel();
 		painelBotao.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -185,7 +200,31 @@ public class FrmContato extends JFrame {
 		painelPrincipal.add(painelBotao);
 		painelBotao.setLayout(null);
 
+		//**********Listener para o botão salvar***********//
 		JButton btnSalvar = new JButton("");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				////***Antes de tudo devo criar um contato***///
+				Contato contato = new Contato();
+				contato.setNome(txtNome.getText());
+				contato.setDtNascimento(txtDtNasc.getText());
+				contato.setTelefone(txtTelefone.getText());
+				contato.setCelular(txtCelular.getText());
+				contato.setEmail(txtEmail.getText());
+				contato.setEndereco(textArea.getText());
+				//tratando para pegar a primeira letra do sexo
+				contato.setSexo(cbSexo.getSelectedItem().toString().substring(0,1));
+				
+				ContatoDAO contatoDAO = new ContatoDAO();
+				contatoDAO.setContato(contato);
+				
+				if(lblOperao.getText().equals("Novo")){
+					contatoDAO.gravar();
+					limparControles();
+				}
+			}
+		});
+		
 		btnSalvar.setIcon(new ImageIcon(FrmContato.class.getResource("/br/senai/sp/jandira/imagens/save32.png")));
 		btnSalvar.setBounds(10, 11, 45, 45);
 		painelBotao.add(btnSalvar);
@@ -200,5 +239,19 @@ public class FrmContato extends JFrame {
 				FrmContato.this.dispose();
 			}
 		});
+	}
+	
+	private void limparControles(){
+		txtId.setText("");
+		txtNome.setText("");
+		txtEmail.setText("");
+		txtTelefone.setText("");
+		txtCelular.setText("");
+		txtDtNasc.setText("");
+		textArea.setText("");
+		cbSexo.setSelectedIndex(0);
+		//Posicionando o cursor em um dos text//
+		txtNome.grabFocus();
+		
 	}
 }
