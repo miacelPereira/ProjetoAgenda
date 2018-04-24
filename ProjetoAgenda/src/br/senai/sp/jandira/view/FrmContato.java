@@ -182,7 +182,7 @@ public class FrmContato extends JFrame {
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
 		
-		//colocando mascra no txt
+		//colocando mascara no txt
 		MaskFormatter dataMask = null;
 		try {
 			dataMask= new MaskFormatter("##/##/####");
@@ -190,9 +190,10 @@ public class FrmContato extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		txtDtNasc = new JFormattedTextField();
+		txtDtNasc = new JFormattedTextField(dataMask);
 		txtDtNasc.setBounds(33, 119, 63, 20);
 		painelDados.add(txtDtNasc);
+		
 
 		JPanel painelBotao = new JPanel();
 		painelBotao.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -221,6 +222,8 @@ public class FrmContato extends JFrame {
 				if(lblOperao.getText().equals("Novo")){
 					contatoDAO.gravar();
 					limparControles();
+				}else if(lblOperao.getText().equals("Excluir")){
+					contatoDAO.excluir(txtId.getText());
 				}
 			}
 		});

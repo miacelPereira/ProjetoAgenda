@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.management.StringValueExp;
 import javax.swing.JOptionPane;
+import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import br.senai.sp.jandira.jdbc.Conexao;
 import br.senai.sp.jandira.model.Contato;
@@ -76,7 +78,7 @@ public class ContatoDAO {
 	public Contato getContato(int id){
 
 		Contato contato = new Contato();
-		//imprimindo o formato da data do banco pára português BR
+		//imprimindo o formato da data do banco para português BR
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		resultado = null;
 		stm = null;
@@ -134,12 +136,23 @@ public class ContatoDAO {
 	//Atualizar contato
 	public void atualizar(){
 		
-	}
-	//Excluir um contato
-	public void excluir(){
 		
 	}
-
-
+	//Excluir um contato
+	public void excluir(String ID){
+		String sqlDelete = "DELETE FROM contatos WHERE id = ?";
+		try{
+			stm = Conexao.getConexao().prepareStatement(sqlDelete);
+			int teste = Integer.parseInt(ID);
+			stm.setInt(1, teste);
+			
+			System.out.println(ID);
+			stm.executeUpdate();
+			JOptionPane.showMessageDialog(null,"Contato excluído");
+			Conexao.fecharConexao();
+		}catch (Exception erro) {
+			System.out.println(erro);
+			JOptionPane.showMessageDialog(null, "Erro em excluir contato");
+		}
+	}
 }
-
