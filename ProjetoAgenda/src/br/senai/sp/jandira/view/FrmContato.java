@@ -8,10 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
@@ -205,28 +209,49 @@ public class FrmContato extends JFrame {
 		JButton btnSalvar = new JButton("");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				SimpleDateFormat toDate = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat toDataBase = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.000000");
+				
+				//Date do pacote Java Util!!!!!
+				Date date = null;
+				String dataAccess = "";
+			
+				try {
+					date = toDate.parse(txtDtNasc.getText());
+					dataAccess = toDataBase.format(date);
+					
 				////***Antes de tudo devo criar um contato***///
-				Contato contato = new Contato();
-				contato.setNome(txtNome.getText());
-				contato.setDtNascimento(txtDtNasc.getText());
-				contato.setTelefone(txtTelefone.getText());
-				contato.setCelular(txtCelular.getText());
-				contato.setEmail(txtEmail.getText());
-				contato.setEndereco(textArea.getText());
-				//tratando para pegar a primeira letra do sexo
-				contato.setSexo(cbSexo.getSelectedItem().toString().substring(0,1));
-				
-				ContatoDAO contatoDAO = new ContatoDAO();
-				contatoDAO.setContato(contato);
-				
-				if(lblOperao.getText().equals("Novo")){
-					contatoDAO.gravar();
-					limparControles();
-				}else if(lblOperao.getText().equals("Excluir")){
-					contatoDAO.excluir(txtId.getText());
-				}
+					Contato contato = new Contato();
+					contato.setNome(txtNome.getText());
+					contato.setDtNascimento(dataAccess);
+					contato.setTelefone(txtTelefone.getText());
+					contato.setCelular(txtCelular.getText());
+					contato.setEmail(txtEmail.getText());
+					contato.setEndereco(textArea.getText());
+					//tratando para pegar a primeira letra do sexo
+					contato.setSexo(cbSexo.getSelectedItem().toString().substring(0,1));
+					
+					ContatoDAO contatoDAO = new ContatoDAO();
+					contatoDAO.setContato(contato);
+					//Gravando no banco
+					if(lblOperao.getText().equals("Novo")){
+						contatoDAO.gravar();
+						limparControles();
+					//Excluir do banco
+					}else if(lblOperao.getText().equals("Excluir")){
+						contatoDAO.excluir(txtId.getText());
+					}else{
+						contatoDAO.atualizar(txtId.getText());
+					}
+					//Alterando registro
+				} catch (ParseException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,"A data está incorreta", "Data Incorreta", JOptionPane.ERROR_MESSAGE);
+					
+				}		
 			}
-		});
+	});
 		
 		btnSalvar.setIcon(new ImageIcon(FrmContato.class.getResource("/br/senai/sp/jandira/imagens/save32.png")));
 		btnSalvar.setBounds(10, 11, 45, 45);

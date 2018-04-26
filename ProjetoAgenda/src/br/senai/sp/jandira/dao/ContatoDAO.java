@@ -132,21 +132,43 @@ public class ContatoDAO {
 			System.out.println(erro.getMessage());
 			
 		}
-	}	
-	//Atualizar contato
-	public void atualizar(){
-		
-		
 	}
+	
+	
+	//Atualizar contato
+	public void atualizar(String ID){
+		String sqlUpdate = "UPDATE contatos SET nome  = ?, dtNasc = ?, email = ?, endereco = ?, telefone = ?, celular = ?, sexo = ? WHERE id = ?";
+		int Id = Integer.parseInt(ID);
+		
+		try{
+			stm = Conexao.getConexao().prepareStatement(sqlUpdate);
+			stm.setString(1, contato.getNome());
+			stm.setString(2, contato.getDtNascimento());
+			stm.setString(3, contato.getEmail());
+			stm.setString(4, contato.getEndereco());
+			stm.setString(5, contato.getTelefone());
+			stm.setString(6, contato.getCelular());
+			stm.setString(7, contato.getSexo());
+			stm.setInt(8, Id);
+			stm.executeUpdate();
+			JOptionPane.showMessageDialog(null,"Contato atualizado com sucesso!");
+			Conexao.fecharConexao();
+			
+		}catch(Exception erro){
+			System.out.println("Erro na atualização do contato!");
+			System.out.println(erro.getMessage());
+			
+		}
+	}
+	
+	
 	//Excluir um contato
 	public void excluir(String ID){
 		String sqlDelete = "DELETE FROM contatos WHERE id = ?";
 		try{
 			stm = Conexao.getConexao().prepareStatement(sqlDelete);
-			int teste = Integer.parseInt(ID);
-			stm.setInt(1, teste);
-			
-			System.out.println(ID);
+			int Id = Integer.parseInt(ID);
+			stm.setInt(1, Id);
 			stm.executeUpdate();
 			JOptionPane.showMessageDialog(null,"Contato excluído");
 			Conexao.fecharConexao();
