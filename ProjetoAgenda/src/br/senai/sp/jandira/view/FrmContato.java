@@ -1,8 +1,5 @@
 package br.senai.sp.jandira.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -240,7 +237,11 @@ public class FrmContato extends JFrame {
 						limparControles();
 					//Excluir do banco
 					}else if(lblOperao.getText().equals("Excluir")){
-						contatoDAO.excluir(txtId.getText());
+						int excluir = JOptionPane.showConfirmDialog(null,"Deseja excluir o contato?");
+						if(excluir == 0) {
+							contatoDAO.excluir(txtId.getText());
+							limparControles();
+						}
 					}else{
 						contatoDAO.atualizar(txtId.getText());
 					}

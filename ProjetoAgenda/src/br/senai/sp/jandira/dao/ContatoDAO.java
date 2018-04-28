@@ -4,11 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import javax.management.StringValueExp;
 import javax.swing.JOptionPane;
-import javax.swing.text.html.HTMLEditorKit.Parser;
-
 import br.senai.sp.jandira.jdbc.Conexao;
 import br.senai.sp.jandira.model.Contato;
 

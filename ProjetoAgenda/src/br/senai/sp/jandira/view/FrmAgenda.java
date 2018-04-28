@@ -1,25 +1,19 @@
 package br.senai.sp.jandira.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import br.senai.sp.jandira.dao.ContatoDAO;
 import br.senai.sp.jandira.model.Contato;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -27,12 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.ActionEvent;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingConstants;
 
 public class FrmAgenda extends JFrame {
@@ -127,7 +115,6 @@ public class FrmAgenda extends JFrame {
 					
 					e1.printStackTrace();
 				}
-				System.out.println(dataSistema);
 				
 				carregarContatos("Excluir");
 			}
